@@ -88,12 +88,6 @@ namespace AlmacenGH
                     }
                 }
             }
-            //List<Empresa> productosBajoStock = Program.gestionAlamacen.BuscarCuentas(txtBuscarCuentasPorDNI.Text, out String mensaje);
-            //dgvProductosBajoStock.DataSource = productosBajoStock;
-            // if (mensaje != "")
-            //{
-            //MessageBox.Show(mensaje);
-            //}
         }
 
         

@@ -132,7 +132,7 @@ namespace CapaDatosAlmacen
                 }
                 while (drdProducto.Read())
                 {
-                    Producto prod = new Producto(drdProducto["IdProducto"].ToString(), drdProducto["Descripcion"].ToString(), int.Parse(drdProducto["Stock"].ToString()), int.Parse(drdProducto["StockMinimo"].ToString()), double.Parse(drdProducto["Precio"].ToString()));
+                    Producto prod = new Producto(drdProducto["IdProducto"].ToString(), drdProducto["Descripcion"].ToString(), int.Parse(drdProducto["Stock"].ToString()), int.Parse(drdProducto["StockMinimo"].ToString()), decimal.Parse(drdProducto["Precio"].ToString()));
                     listaProductos.Add(prod);
                 }
                 mensaje = "";
@@ -147,7 +147,7 @@ namespace CapaDatosAlmacen
 
         }
 
-        public string ReponerProductos(string id,string stock, double precioCompra)
+        public string ReponerProductos(string id,string stock, decimal precioCompra)
         {
             SqlConnection conexion = new SqlConnection(cadena);
             conexion.Open();
@@ -197,7 +197,7 @@ namespace CapaDatosAlmacen
                         id = dividir[0];
                         stock = dividir[1];
                         precioCompra = dividir[2];
-                        double precio = double.Parse(precioCompra);
+                        decimal precio = decimal.Parse(precioCompra);
 
                         if (ReponerProductos(id, stock, precio) == "")
                         {

@@ -12,19 +12,19 @@ namespace Entidades
         public string Descripcion { get; set; }
         public int Stock { get; set; }
         public int StockMinimo { get; set; }
-        public double PrecioCompra { get; set; }
-        public double PrecioVenta { get; set; }
+        public decimal PrecioCompra { get; set; }
+        public decimal PrecioVenta { get; set; }
         public Producto()
         {
         }
-        public Producto(string id, string descripcion, int stock,int stockMinimo,double precioCompra)
+        public Producto(string id, string descripcion, int stock,int stockMinimo,decimal precioCompra)
         {
             Id = id;
             Descripcion = descripcion;
             Stock = stock;
             StockMinimo = stockMinimo;
             PrecioCompra = precioCompra;
-            PrecioVenta = precioCompra + 0.1;
+            PrecioVenta = precioCompra + (decimal)0.1;
 
         }
     }

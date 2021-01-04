@@ -26,7 +26,7 @@ namespace CapaNegocioAlmacen
             return datosBancarios.ProductosBajoStock(out mensaje);
         }
 
-        public string ReponerProductos(string id, string stock, double precioCompra)
+        public string ReponerProductos(string id, string stock, decimal precioCompra)
         {
             return datosBancarios.ReponerProductos(id, stock, precioCompra);
         }
