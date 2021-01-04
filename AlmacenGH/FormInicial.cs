@@ -32,10 +32,14 @@ namespace AlmacenGH
 
         private void reponiendoStockToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
-            if (Program.gestionAlamacen.LeerFichero(openFileDialog1.FileName.ToString()) != "")
+            DialogResult valor = openFileDialog1.ShowDialog();
+            if (valor == DialogResult.OK)
             {
-                MessageBox.Show(Program.gestionAlamacen.LeerFichero(openFileDialog1.FileName.ToString()));
+                string msj = Program.gestionAlamacen.LeerFichero(openFileDialog1.FileName.ToString());
+                if (msj != "")
+                {
+                    MessageBox.Show(msj);
+                }
             }
             
         }

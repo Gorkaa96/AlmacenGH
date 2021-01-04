@@ -55,26 +55,14 @@ namespace AlmacenGH
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             string mensaje = Program.gestionAlamacen.AgregarModificarEmpresa(txtNif.Text, txtNombre.Text, txtLogoUrl.Text);
-            if (mensaje=="Empresa añadida")
+            if (mensaje == "")
             {
-                try { 
-                var empresa = Program.gestionAlamacen.BuscarEmpresa(out String men);
-                var request = WebRequest.Create(empresa.Logo);
-                using (var response = request.GetResponse())
-                using (var stream = response.GetResponseStream())
-                {
-                    picBoxLogo.Image = Image.FromStream(stream);
-                    picBoxLogo.SizeMode = PictureBoxSizeMode.StretchImage;
-                }
-                    MessageBox.Show(mensaje);
-                }
-                catch (Exception)
+
+                MessageBox.Show("No se ha modificado nada");
+
+            }
+            else
             {
-                picBoxLogo.Image = null;
-                    MessageBox.Show(mensaje);
-                }
-            
-            }else if(mensaje=="Empresa modificada"){
                 try
                 {
                     var empresa = Program.gestionAlamacen.BuscarEmpresa(out String men);
@@ -87,15 +75,12 @@ namespace AlmacenGH
                     }
                     MessageBox.Show(mensaje);
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     picBoxLogo.Image = null;
                     MessageBox.Show(mensaje);
                 }
-            }
-            else
-            {
-                MessageBox.Show(mensaje);
+
             }      
             
         }

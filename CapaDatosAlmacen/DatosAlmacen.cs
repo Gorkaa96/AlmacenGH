@@ -13,6 +13,7 @@ namespace CapaDatosAlmacen
     {
         String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
 
+        //String cadena = "Data Source = .; Initial Catalog = AlmacenGH; Integrated Security = True";
 
         public Empresa BuscarEmpresa(out String mensaje)
         {
@@ -109,7 +110,8 @@ namespace CapaDatosAlmacen
                 }
             }
             conexion.Close();
-            return "No has modificado nada";
+            // QUE EL NIF EL NOMBRE Y EL LOGO SON IGUALES
+            return "";
         }
 
         public List<Producto> ProductosBajoStock(out String mensaje)
@@ -239,11 +241,10 @@ namespace CapaDatosAlmacen
                 }
                 return mensajeFinal;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                
+                return exc.Message;
             }
-            return "";
         }
     }
 }
