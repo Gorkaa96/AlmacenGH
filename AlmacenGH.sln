@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaNegocioAlmacen", "CapaN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "Entidades\Entidades.csproj", "{D5BF3F39-28FA-4E12-A2C0-959D77B1516E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comentarios y notas", "Comentarios y notas", "{773FDF5C-2AC1-4A81-A368-B611A2C4FD34}"
+	ProjectSection(SolutionItems) = preProject
+		0105 Hernández Gorka.docx = 0105 Hernández Gorka.docx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

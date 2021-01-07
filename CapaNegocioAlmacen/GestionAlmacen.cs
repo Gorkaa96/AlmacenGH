@@ -10,7 +10,7 @@ namespace CapaNegocioAlmacen
 {
     public class GestionAlmacen
     {
-        DatosAlmacen datosBancarios = new DatosAlmacen();
+        DatosAlmacen datosBancarios = new DatosAlmacen(); // TODO datosBancarios Nombre ilógico 
 
         public Empresa BuscarEmpresa(out String mensaje)
         {

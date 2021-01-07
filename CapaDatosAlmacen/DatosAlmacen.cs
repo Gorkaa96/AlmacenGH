@@ -11,9 +11,9 @@ namespace CapaDatosAlmacen
 {
     public class DatosAlmacen
     {
-        String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
+        //String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
 
-        //String cadena = "Data Source = .; Initial Catalog = AlmacenGH; Integrated Security = True";
+        String cadena = "Data Source = .; Initial Catalog = AlmacenGH; Integrated Security = True";
 
         public Empresa BuscarEmpresa(out String mensaje)
         {
@@ -64,7 +64,7 @@ namespace CapaDatosAlmacen
                     }
                     else
                     {
-                        emp = new Empresa(nif, nombre, logo);
+                        emp = new Empresa(nif, nombre, logo); // TODO ¿Para qué haces esto si emp no va a ningún lugar?
                         conexion.Close();
                         return "Empresa añadida";
                     }
@@ -96,7 +96,7 @@ namespace CapaDatosAlmacen
                         }
                         else
                         {
-                            emp.Nif = nif;
+                            emp.Nif = nif; // TODO ¿Para qué haces esto si emp no va a ningún lugar?
                             emp.Nombre = nombre;
                             emp.Logo = logo;
                             return "Empresa modificada";
@@ -147,8 +147,9 @@ namespace CapaDatosAlmacen
 
         }
 
-        public string ReponerProductos(string id,string stock, decimal precioCompra)
+        public string ReponerProductos(string id,string stock, decimal precioCompra) // TODO Por nombre parece que va a reponer varios y solo es para 1
         {
+            // TODO No modificas el precio de venta en función del de compra (ver enunciado)
             SqlConnection conexion = new SqlConnection(cadena);
             conexion.Open();
             String sql = "UPDATE Productos SET [Stock] = @Stock, [Precio] = @PrecioCompra WHERE IdProducto=@Id";
