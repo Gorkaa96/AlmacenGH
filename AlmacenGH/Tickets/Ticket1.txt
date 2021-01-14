@@ -1,0 +1,6 @@
+Empresa: Eroski
+Cif: 45961276Z
+Numero ticket: 7
+Fecha: 14/1/2021
+
+Total a pagar: 1,1
