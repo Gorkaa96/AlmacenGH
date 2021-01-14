@@ -48,5 +48,11 @@ namespace AlmacenGH
         {
             Close();
         }
+
+        private void ventaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormVenta frm = new FormVenta();
+            frm.Show();
+        }
     }
 }

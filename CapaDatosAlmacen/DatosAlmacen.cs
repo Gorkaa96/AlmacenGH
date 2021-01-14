@@ -11,6 +11,8 @@ namespace CapaDatosAlmacen
 {
     public class DatosAlmacen
     {
+        List<Ticket> listaRecivida = null;
+
         String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
 
         //String cadena = "Data Source = .; Initial Catalog = AlmacenGH; Integrated Security = True";
@@ -147,7 +149,7 @@ namespace CapaDatosAlmacen
 
         }
 
-        public string ReponerProductos(string id,string stock, decimal precioCompra)
+        public string ReponerProducto(string id, string stock, decimal precioCompra)
         {
             SqlConnection conexion = new SqlConnection(cadena);
             conexion.Open();
@@ -160,7 +162,7 @@ namespace CapaDatosAlmacen
             if (numFiles != 1)
             {
                 conexion.Close();
-                return "No se ha encontrado ningun producto con identificaor "+id;
+                return "No se ha encontrado ningun producto con identificaor " + id;
             }
             else
             {
@@ -172,7 +174,6 @@ namespace CapaDatosAlmacen
         {
             try
             {
-
                 string[] lineas = File.ReadAllLines(fileName);
                 string id;
                 string stock;
@@ -199,7 +200,7 @@ namespace CapaDatosAlmacen
                         precioCompra = dividir[2];
                         decimal precio = decimal.Parse(precioCompra);
 
-                        if (ReponerProductos(id, stock, precio) == "")
+                        if (ReponerProducto(id, stock, precio) == "")
                         {
                             if (productosActualizados == "")
                             {
@@ -212,7 +213,7 @@ namespace CapaDatosAlmacen
                         }
                         else
                         {
-                            msj = ReponerProductos(id, stock, precio) + "\n";
+                            msj = ReponerProducto(id, stock, precio) + "\n";
                         }
                     }
                 }
@@ -244,6 +245,157 @@ namespace CapaDatosAlmacen
             catch (Exception exc)
             {
                 return exc.Message;
+            }
+        }
+
+        public Producto BuscarProducto(string id, out String mensaje)
+        {
+            if (int.TryParse(id, out int number) == false)
+            {
+                mensaje = "El identificador debe de ser numérico";
+                return null;
+            }
+            else
+            {
+
+
+                SqlConnection conexion = new SqlConnection(cadena);
+                try
+                {
+                    conexion.Open();
+                    String sql = "SELECT * FROM Productos WHERE IdProducto=@Id";
+                    SqlCommand cmdProducto = new SqlCommand(sql, conexion);
+                    cmdProducto.Parameters.AddWithValue("Id", id);
+                    SqlDataReader drProducto = cmdProducto.ExecuteReader();
+
+                    if (!drProducto.Read())
+                    {
+                        mensaje = "No hay ningun producto con este identificador";
+                        return null;
+                    }
+                    Producto prod = new Producto(drProducto["IdProducto"].ToString(), drProducto["Descripcion"].ToString(), int.Parse(drProducto["Stock"].ToString()), int.Parse(drProducto["StockMinimo"].ToString()), decimal.Parse(drProducto["Precio"].ToString()));
+                    mensaje = "";
+                    return prod;
+
+                }
+                catch (Exception exc)
+                {
+                    mensaje = exc.Message;
+                    return null;
+                }
+            }
+        }
+        public string IdUltimoTicketDeTickets()
+        {
+            SqlConnection conexion = new SqlConnection(cadena);
+            try
+            {
+                conexion.Open();
+                String sql = "SELECT MAX(IdTicket) FROM Tickets";
+                SqlCommand cmdProducto = new SqlCommand(sql, conexion);
+                string idTicket = cmdProducto.ExecuteScalar().ToString();
+                int id = int.Parse(idTicket)+1;
+                return id.ToString();
+
+            }
+            catch (Exception )
+            {
+                return null;
+            }
+        }
+
+        public string IdUltimoTicketDeTicketsProductos()
+        {
+            string id = IdUltimoTicketDeTickets();
+            int idTicket = int.Parse(id);
+            return (idTicket - 1).ToString();
+        }
+
+        public string AñadirTicketEnTickets()
+        {
+            string id = IdUltimoTicketDeTickets();
+            SqlConnection conexion = new SqlConnection(cadena);
+
+            try
+            {
+                conexion.Open();
+                String sql = "INSERT INTO Tickets (IdTicket,Fecha) VALUES(@id,@fecha)";
+                SqlCommand cmdAñadir = new SqlCommand(sql, conexion);
+                cmdAñadir.Parameters.AddWithValue("@id", id);
+                cmdAñadir.Parameters.AddWithValue("@fecha", DateTime.Today.Day.ToString() + "/" + DateTime.Today.Month.ToString() + "/" + DateTime.Today.Year.ToString());
+                int numFiles = cmdAñadir.ExecuteNonQuery();
+                if (numFiles != 1)
+                {
+                    conexion.Close();
+                    return "No se ha podido añadir el ticket";
+                }
+                else
+                {
+                    conexion.Close();
+                    return "";
+                }
+            }
+            catch (Exception exc)
+            {
+                conexion.Close();
+                return exc.Message;
+            }
+        }
+
+        public string AñadirTicketEnTicketsProductos(string idProducto,decimal precio,string cantidad)
+        {
+            string id = IdUltimoTicketDeTicketsProductos();
+            SqlConnection conexion = new SqlConnection(cadena);
+            try
+            {
+                conexion.Open();
+                String sql = "INSERT INTO TicketsProductos (IdTicket,IdProducto,Precio,CantidadVendida) VALUES(@idTicket,@idProducto,@precio,@cantidadVendida)";
+                SqlCommand cmdAñadir = new SqlCommand(sql, conexion);
+                cmdAñadir.Parameters.AddWithValue("@idTicket", id);
+                cmdAñadir.Parameters.AddWithValue("@idProducto", idProducto);
+                cmdAñadir.Parameters.AddWithValue("@precio", precio);
+                cmdAñadir.Parameters.AddWithValue("@cantidadVendida", int.Parse(cantidad));
+                int numFiles = cmdAñadir.ExecuteNonQuery();
+                if (numFiles != 1)
+                {
+                    conexion.Close();
+                    return "No se ha podido añadir el ticket";
+                }
+                else
+                {
+                    conexion.Close();
+                    return "";
+                }
+            }
+            catch (Exception exc)
+            {
+                conexion.Close();
+                return exc.Message;
+            }
+        }
+
+        public void RecivirLista(List<Ticket> ticket)
+        {
+            listaRecivida = ticket;
+        }
+
+        public string ActualizarStockProducto(string id, string cantidad)
+        {
+            SqlConnection conexion = new SqlConnection(cadena);
+            conexion.Open();
+            String sql = "UPDATE Productos SET [Stock] = [Stock]-@Cantidad WHERE IdProducto=@Id ";
+            SqlCommand cmdAñadir = new SqlCommand(sql, conexion);
+            cmdAñadir.Parameters.AddWithValue("Cantidad", cantidad);
+            cmdAñadir.Parameters.AddWithValue("Id", id);
+            int numFiles = cmdAñadir.ExecuteNonQuery();
+            if (numFiles == -1 || numFiles == 0)
+            {
+                conexion.Close();
+                return "No se ha podido actualizar el stock";
+            }
+            else
+            {
+                return "";
             }
         }
     }
