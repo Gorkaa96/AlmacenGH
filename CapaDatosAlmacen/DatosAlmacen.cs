@@ -11,7 +11,7 @@ namespace CapaDatosAlmacen
 {
     public class DatosAlmacen
     {
-        List<Ticket> listaRecivida = null;
+        List<Ticket> listaRecivida = new List<Ticket>();
 
         String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
 

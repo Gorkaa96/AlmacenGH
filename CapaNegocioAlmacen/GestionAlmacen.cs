@@ -53,5 +53,10 @@ namespace CapaNegocioAlmacen
         {
             return datosAlmacen.ActualizarStockProducto(id,cantidad);
         }
+
+        public string NumeroDeTicket()
+        {
+            return datosAlmacen.IdUltimoTicketDeTicketsProductos();
+        }
     }
 }

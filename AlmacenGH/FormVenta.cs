@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -212,9 +213,29 @@ namespace AlmacenGH
                     {
                         MessageBox.Show(msj3);
                     }
+                    else
+                    {
+                            
+                                SaveFileDialog sfd = new SaveFileDialog();
+                                sfd.Filter = "Archivos de texto|*.txt|Todos los archivos|*.*";
+                        if (sfd.ShowDialog() == DialogResult.OK)
+                        {
+                            List<string> nTicket = new List<string>();
+                            var emp = Program.gestionAlamacen.BuscarEmpresa(out string msj);
+                            nTicket.Add("Empresa: " + emp.Nombre.ToString() + "\n" +
+                                "Cif: " + emp.Nif.ToString() + "\n"+
+                                "Numero ticket: "+ Program.gestionAlamacen.NumeroDeTicket() + "\n" +
+                                    "Fecha: " + DateTime.Today.Day.ToString() + "/" + DateTime.Today.Month.ToString() + "/" + DateTime.Today.Year.ToString() + "\n\n"+
+                                    "Total a pagar: "+lblPrecio.Text);
+                            
+                            File.WriteAllLines(sfd.FileName, nTicket);
+                        
+                        }      
+                    }
                 }
                 dataGridView1.DataSource = null;
                 lblPrecio.Text = "0";
+                elementosTicket.Clear();
             }
         }
     }
