@@ -13,9 +13,9 @@ namespace CapaDatosAlmacen
     {
         List<Ticket> listaRecivida = new List<Ticket>();
 
-        String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
+       // String cadena = "Data Source = PORTATIL-GORKA\\GORKASQLSERVER; Initial Catalog = AlmacenGH; Integrated Security = True";
 
-        //String cadena = "Data Source = .; Initial Catalog = AlmacenGH; Integrated Security = True";
+        String cadena = "Data Source = .; Initial Catalog = AlmacenGH; Integrated Security = True";
 
         public Empresa BuscarEmpresa(out String mensaje)
         {
