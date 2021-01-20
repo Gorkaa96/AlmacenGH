@@ -71,7 +71,8 @@ namespace AlmacenGH
             {
                 if (elementosTicket.Count()!=0)
                 {
-                    for (int i = 0; i < elementosTicket.Count(); i++)
+                    // TODO NO FUNCIONA Aunque saque mensaje de error, se queda con el elemento repetido (por else) siempre que no coincida que sea el último
+                    for (int i = 0; i < elementosTicket.Count(); i++) // TODO Aunque encuentre y saque mensaje de error sigue buscando
                     {
                         if (elementosTicket[i].IdProducto == txtIdentificador.Text)
                         {
@@ -79,7 +80,7 @@ namespace AlmacenGH
                             txtIdentificador.Text = "";
                             lblMostrarDescripcion.Text = "";
                         }
-                        else
+                        else // TODO Esto no tiene sentido
                         {
                             txtIdentificador.Text = producto.Id;
                             lblMostrarDescripcion.Text = producto.Descripcion;
@@ -87,7 +88,7 @@ namespace AlmacenGH
                         }
                     }
                 }
-                else
+                else 
                 {
                     txtIdentificador.Text = producto.Id;
                     lblMostrarDescripcion.Text = producto.Descripcion;
@@ -132,7 +133,7 @@ namespace AlmacenGH
                             {
                                 precioProductoSegunCantidad = decimal.Parse(elementosTicket[i].PrecioVenta) * decimal.Parse(elementosTicket[i].Cantidad);
                                 precioTotal += precioProductoSegunCantidad;
-                                lblPrecio.Text = precioTotal.ToString();
+                                lblPrecio.Text = precioTotal.ToString(); // TODO No tiene sentido hacerlo dentro del grupo
                             }
                             txtIdentificador.Text = "";
                             lblMostrarDescripcion.Text = "";
@@ -187,6 +188,7 @@ namespace AlmacenGH
             }
             else
             {
+                // TODO Lo siguiente debía ser responsabilidad de la capa de datos, aquí solo llamar a grabar ticket con sus productos
 
                 Program.gestionAlamacen.RecivirLista(elementosTicket);
                 var msj1 = Program.gestionAlamacen.AñadirTicketEnTickets();
@@ -220,6 +222,8 @@ namespace AlmacenGH
                                 sfd.Filter = "Archivos de texto|*.txt|Todos los archivos|*.*";
                         if (sfd.ShowDialog() == DialogResult.OK)
                         {
+                            // TODO Esto no se debe hacer aquí, estamos en la capa de presentación, no trabaja con ficheros ni bd
+                            // Graba solo la parte de cabecera
                             List<string> nTicket = new List<string>();
                             var emp = Program.gestionAlamacen.BuscarEmpresa(out string msj);
                             nTicket.Add("Empresa: " + emp.Nombre.ToString() + "\n" +

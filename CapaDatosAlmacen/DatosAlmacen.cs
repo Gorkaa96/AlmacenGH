@@ -344,7 +344,7 @@ namespace CapaDatosAlmacen
 
         public string AñadirTicketEnTicketsProductos(string idProducto,decimal precio,string cantidad)
         {
-            string id = IdUltimoTicketDeTicketsProductos();
+            string id = IdUltimoTicketDeTicketsProductos(); // TODO Lo lógico es que usase el mismo que ya tenía para el ticket 
             SqlConnection conexion = new SqlConnection(cadena);
             try
             {
@@ -374,7 +374,7 @@ namespace CapaDatosAlmacen
             }
         }
 
-        public void RecivirLista(List<Ticket> ticket)
+        public void RecivirLista(List<Ticket> ticket) // TODO ¡¡¡Con v!!! No tiene sentido debería ser un parámetro de AñadirTicketEnTickets
         {
             listaRecivida = ticket;
         }
